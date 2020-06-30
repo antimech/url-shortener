@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Link;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class LinkController extends Controller
@@ -18,14 +19,16 @@ class LinkController extends Controller
     {
         $request->validate([
             'link' => ['required', 'url'],
-            'custom_alias' => ['nullable', 'string', 'alpha_dash', 'unique:links,hash', 'min:8', 'max:16']
+            'custom_alias' => ['nullable', 'string', 'alpha_dash', 'unique:links,hash', 'min:8', 'max:16'],
+            'expired_at' => ['nullable', 'date']
         ]);
 
         $linkHash = $request->custom_alias ?? Str::random(8);
 
         $shortLink = Link::create([
             'hash' => $linkHash,
-            'link' => $request->link
+            'link' => $request->link,
+            'expired_at' => $request->expired_at
         ]);
 
         return response([
@@ -37,10 +40,13 @@ class LinkController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Link  $link
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function show(Link $link)
     {
+        if ($link->expired_at && Carbon::now() >= $link->expired_at)
+            return abort(404);
+
         return redirect($link->link);
     }
 }

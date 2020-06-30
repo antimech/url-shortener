@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -91,5 +92,71 @@ class LinkShortenerTest extends TestCase
 
         $redirectResponse
             ->assertRedirect($this->longLink);
+    }
+
+    /**
+     * Test link shortener, shortened link redirect and expiration.
+     *
+     * @return void
+     */
+    public function testShortenLinkWithExpirationDate()
+    {
+        $this->setNow(2020, 1, 1);
+
+        $requestData = [
+            'link' => $this->longLink,
+            'expired_at' => '2020-01-02'
+        ];
+
+        $shortenResponse = $this->post(
+            route('link.store'),
+            $requestData
+        );
+
+        $shortenResponse
+            ->assertOk()
+            ->assertJson(['data' => [
+                'link' => $this->longLink
+            ]]);
+
+        $hash = $shortenResponse['data']['hash'];
+
+        $this->assertDatabaseHas('links', [
+            'hash' => $hash,
+            'link' => $this->longLink
+        ]);
+
+        $redirectResponse = $this->get(
+            route('link.show', $hash)
+        );
+
+        $redirectResponse
+            ->assertRedirect($this->longLink);
+
+        $this->setNow(2020, 1, 2);
+
+        $redirectResponse = $this->get(
+            route('link.show', $hash)
+        );
+
+        $redirectResponse
+            ->assertNotFound();
+    }
+
+    /**
+     * Allows to rewind the time and remake the world.
+     *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @return $this
+     */
+    protected function setNow(int $year, int $month, int $day)
+    {
+        $newNow = Carbon::create($year, $month, $day)->startOfDay();
+
+        Carbon::setTestNow($newNow);
+
+        return $this;
     }
 }

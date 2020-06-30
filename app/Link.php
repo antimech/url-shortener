@@ -12,7 +12,7 @@ class Link extends Model
      * @var array
      */
     protected $fillable = [
-        'hash', 'link',
+        'hash', 'link', 'expired_at',
     ];
 
     /**
