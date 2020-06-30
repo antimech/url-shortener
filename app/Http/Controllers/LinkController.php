@@ -17,10 +17,11 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'link' => 'required|url'
+            'link' => ['required', 'url'],
+            'custom_alias' => ['nullable', 'string', 'alpha_dash', 'unique:links,hash', 'min:8', 'max:16']
         ]);
 
-        $linkHash = Str::random(8);
+        $linkHash = $request->custom_alias ?? Str::random(8);
 
         $shortLink = Link::create([
             'hash' => $linkHash,
