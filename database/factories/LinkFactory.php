@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(Link::class, function (Faker $faker) {
-    $customOrRandom = random_int(0, 1);
-    $dateOrNull = random_int(0, 1);
+    $customOrRandom = $faker->boolean;
+    $dateOrNull = $faker->boolean;
 
     return [
         'hash' => $customOrRandom
