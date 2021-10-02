@@ -45,7 +45,7 @@ class LinkController extends Controller
     public function show(Link $link)
     {
         if ($link->expired_at && Carbon::now() >= $link->expired_at) {
-            return abort(Response::HTTP_NOT_FOUND);
+            throw new NotFoundHttpException();
         }
 
         return redirect($link->link);
