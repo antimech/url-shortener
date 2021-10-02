@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Link;
+use App\Services\LinkService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -24,7 +25,7 @@ class LinkController extends Controller
             'expired_at' => ['nullable', 'date']
         ]);
 
-        $linkHash = $request->custom_alias ?? Str::random(8);
+        $linkHash = $request->custom_alias ?? LinkService::generateRandomUniqueHash();
 
         $shortLink = Link::create([
             'hash' => $linkHash,
