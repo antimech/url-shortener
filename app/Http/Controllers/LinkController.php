@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLinkRequest;
 use App\Link;
 use App\Services\LinkService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -16,14 +16,8 @@ class LinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLinkRequest $request)
     {
-        $request->validate([
-            'link' => ['required', 'url'],
-            'custom_alias' => ['nullable', 'string', 'alpha_dash', 'unique:links,hash', 'min:8', 'max:16'],
-            'expired_at' => ['nullable', 'date']
-        ]);
-
         $linkHash = $request->custom_alias ?? LinkService::generateRandomUniqueHash();
 
         $shortLink = Link::create([
