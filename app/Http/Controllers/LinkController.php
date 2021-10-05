@@ -13,7 +13,7 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreLinkRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreLinkRequest $request)
