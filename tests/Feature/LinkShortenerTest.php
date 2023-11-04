@@ -58,7 +58,7 @@ class LinkShortenerTest extends TestCase
     }
 
     /**
-     * Test link shortener with custom aliast and shortened link redirect.
+     * Test link shortener with custom alias and shortened link redirect.
      *
      * @return void
      */
