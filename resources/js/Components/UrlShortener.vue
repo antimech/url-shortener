@@ -40,9 +40,6 @@ function shorten() {
 }
 
 function clearFields() {
-    link.value = null
-    customAlias.value = null
-    expiredAt.value = null
     link.value = null;
     customAlias.value = null;
     expiredAt.value = null;
