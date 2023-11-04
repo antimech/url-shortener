@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLinkRequest;
-use App\Link;
+use App\Models\Link;
 use App\Services\LinkService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -12,11 +14,8 @@ class LinkController extends Controller
 {
     /**
      * Store a newly created resource in storage.
-     *
-     * @param StoreLinkRequest $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreLinkRequest $request)
+    public function store(StoreLinkRequest $request): Response
     {
         $linkHash = $request->custom_alias ?? LinkService::generateRandomUniqueHash();
 
@@ -33,11 +32,8 @@ class LinkController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Link  $link
-     * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function show(Link $link)
+    public function show(Link $link): RedirectResponse
     {
         if ($link->expired_at && Carbon::now() >= $link->expired_at) {
             throw new NotFoundHttpException();

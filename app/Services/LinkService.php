@@ -2,16 +2,13 @@
 
 namespace App\Services;
 
-use App\Link;
+use App\Models\Link;
 use Illuminate\Support\Str;
 
 class LinkService
 {
     /**
      * Recursively generates unique hash.
-     *
-     * @param int $length
-     * @return string
      */
     public static function generateRandomUniqueHash(int $length = 8): string
     {

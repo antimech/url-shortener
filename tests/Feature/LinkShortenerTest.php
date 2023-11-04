@@ -11,7 +11,7 @@ class LinkShortenerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $longLink;
+    private string $longLink;
 
     protected function setUp(): void
     {
@@ -22,10 +22,8 @@ class LinkShortenerTest extends TestCase
 
     /**
      * Test link shortener and shortened link redirect.
-     *
-     * @return void
      */
-    public function testShortenLink()
+    public function testShortenLink(): void
     {
         $requestData = [
             'link' => $this->longLink
@@ -59,10 +57,8 @@ class LinkShortenerTest extends TestCase
 
     /**
      * Test link shortener with custom alias and shortened link redirect.
-     *
-     * @return void
      */
-    public function testShortenLinkWithCustomAlias()
+    public function testShortenLinkWithCustomAlias(): void
     {
         $requestData = [
             'link' => $this->longLink,
@@ -96,10 +92,8 @@ class LinkShortenerTest extends TestCase
 
     /**
      * Test link shortener, shortened link redirect and expiration.
-     *
-     * @return void
      */
-    public function testShortenLinkWithExpirationDate()
+    public function testShortenLinkWithExpirationDate(): void
     {
         $this->setNow(2020, 1, 1);
 
@@ -145,13 +139,8 @@ class LinkShortenerTest extends TestCase
 
     /**
      * Allows to rewind the time and remake the world.
-     *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @return $this
      */
-    protected function setNow(int $year, int $month, int $day)
+    protected function setNow(int $year, int $month, int $day): static
     {
         $newNow = Carbon::create($year, $month, $day)->startOfDay();
 
