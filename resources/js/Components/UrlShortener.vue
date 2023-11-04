@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
@@ -16,7 +16,7 @@ function shorten() {
     const data = {
         'link': link.value,
         'custom_alias': customAlias.value,
-        'expired_at': expiredAt.value
+        'expired_at': expiredAt.value,
     };
 
     axios
@@ -27,7 +27,7 @@ function shorten() {
             shortLinks.value.push({
                 'Short Link': data.short_link,
                 'Link': data.link,
-                'Expired At': data.expired_at
+                'Expired At': data.expired_at,
             });
 
             clearFields();
@@ -39,11 +39,14 @@ function clearFields() {
     link.value = null
     customAlias.value = null
     expiredAt.value = null
+    link.value = null;
+    customAlias.value = null;
+    expiredAt.value = null;
 }
 
 // lifecycle hooks
 onMounted(() => {
-    console.log('Component mounted.')
+    console.log('Component mounted.');
 });
 </script>
 
