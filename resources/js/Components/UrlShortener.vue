@@ -95,17 +95,17 @@ onMounted(() => {
         <div class="flex justify-center pt-2">
             <PrimaryButton @click.prevent="shorten">Shorten</PrimaryButton>
         </div>
-
-        <p v-if="shortLink" class="text-center pt-2">
-            <a
-                v-bind:href="shortLink"
-                target="_blank"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >
-                {{ shortLink }}
-            </a>
-        </p>
-
-        <Table v-if="shortLink" :items="shortLinks" class="pt-2" />
     </form>
+
+    <p v-if="shortLink" class="text-center pt-2">
+        <a
+            v-bind:href="shortLink"
+            target="_blank"
+            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+        >
+            {{ shortLink }}
+        </a>
+    </p>
+
+    <Table v-if="shortLink" :items="shortLinks" class="pt-2" />
 </template>
