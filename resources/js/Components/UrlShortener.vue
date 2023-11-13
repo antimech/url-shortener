@@ -4,6 +4,7 @@ import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
+import CopyButton from "@/Components/CopyButton.vue";
 
 // reactive state
 const link = ref('');
@@ -105,6 +106,8 @@ onMounted(() => {
         >
             {{ shortLink }}
         </a>
+
+        <CopyButton :text="shortLink" />
     </p>
 
     <Table v-if="shortLink" :items="shortLinks" class="pt-2" />
