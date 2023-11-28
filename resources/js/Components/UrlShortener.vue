@@ -15,29 +15,27 @@ const shortLink = ref('');
 const errors = ref([]);
 
 // functions that mutate state and trigger updates
-function shorten() {
+async function shorten() {
     const data = {
         'link': link.value,
         'custom_alias': customAlias.value,
         'expired_at': expiredAt.value,
     };
 
-    axios
-        .post(route('link.store'), data)
-        .then(res => {
-            const {data} = res.data;
-            shortLink.value = data.short_link;
-            shortLinks.value.push({
-                'Short Link': data.short_link,
-                'Link': data.link,
-                'Expired At': data.expired_at,
-            });
-
-            clearFields();
-        })
-        .catch(err => {
-            errors.value = err.response.data.errors;
+    try {
+        const response = await axios.post(route('link.store'), data);
+        const responseData = response.data.data;
+        shortLink.value = responseData.short_link;
+        shortLinks.value.push({
+            'Short Link': responseData.short_link,
+            'Link': responseData.link,
+            'Expired At': responseData.expired_at,
         });
+    } catch (error) {
+        errors.value = error.response.data.errors;
+    }
+
+    clearFields();
 }
 
 function clearFields() {
