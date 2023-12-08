@@ -15,7 +15,7 @@ const shortLink = ref('');
 const errors = ref([]);
 
 // functions that mutate state and trigger updates
-async function shorten() {
+async function handleSubmit() {
     const formData = {
         'link': link.value,
         'custom_alias': customAlias.value,
@@ -92,7 +92,7 @@ onMounted(() => {
         </div>
 
         <div class="flex justify-center pt-2">
-            <PrimaryButton @click.prevent="shorten">Shorten</PrimaryButton>
+            <PrimaryButton @click.prevent="handleSubmit">Shorten</PrimaryButton>
         </div>
     </form>
 
