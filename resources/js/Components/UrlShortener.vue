@@ -38,9 +38,9 @@ async function handleSubmit() {
 }
 
 function clearFields() {
-    link.value = null;
-    customAlias.value = null;
-    expiredAt.value = null;
+    link.value = '';
+    customAlias.value = '';
+    expiredAt.value = '';
     errors.value = [];
 }
 
