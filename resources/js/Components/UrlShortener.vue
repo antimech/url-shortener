@@ -23,13 +23,12 @@ async function handleSubmit() {
     };
 
     try {
-        const response = await axios.post(route('link.store'), formData);
-        const responseData = response.data.data;
-        shortLink.value = responseData.short_link;
+        const {data: { data }} = await axios.post(route('link.store'), formData);
+        shortLink.value = data.short_link;
         shortLinks.value.push({
-            'Short Link': responseData.short_link,
-            'Link': responseData.link,
-            'Expired At': responseData.expired_at,
+            'Short Link': data.short_link,
+            'Link': data.link,
+            'Expired At': data.expired_at,
         });
     } catch (error) {
         errors.value = error.response.data.errors;
