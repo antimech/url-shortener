@@ -16,14 +16,14 @@ const errors = ref([]);
 
 // functions that mutate state and trigger updates
 async function shorten() {
-    const data = {
+    const formData = {
         'link': link.value,
         'custom_alias': customAlias.value,
         'expired_at': expiredAt.value,
     };
 
     try {
-        const response = await axios.post(route('link.store'), data);
+        const response = await axios.post(route('link.store'), formData);
         const responseData = response.data.data;
         shortLink.value = responseData.short_link;
         shortLinks.value.push({
